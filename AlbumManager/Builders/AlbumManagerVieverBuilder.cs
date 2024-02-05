@@ -7,10 +7,10 @@ namespace AlbumsManager.Builders
         IAlbumManagerMetadataBuilder AddMetadataReader<TCreatorConfiguration>(Action<TCreatorConfiguration> configuration);
     }
 
-    internal class AlbumManagerVieverBuilder : IAlbumManagerVieverBuilder
+    internal sealed class AlbumManagerVieverBuilder : IAlbumManagerVieverBuilder
     {
-        private readonly ICreator _creator;
-        public AlbumManagerVieverBuilder(ICreator creator) => _creator = creator;
+        private readonly IAlbumManagerCreator _creator;
+        public AlbumManagerVieverBuilder(IAlbumManagerCreator creator) => _creator = creator;
 
         public IAlbumManagerMetadataBuilder AddMetadataReader<TCreatorConfiguration>(Action<TCreatorConfiguration> configuration)
         {

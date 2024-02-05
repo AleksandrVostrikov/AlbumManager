@@ -2,9 +2,9 @@
 
 namespace AlbumsManager.Creators.FolderAlbum
 {
-    public class FolderAlbumCreator : AlbumCreatorBase<FolderAlbumCreatorConfiguration>
+    public sealed class FolderAlbumManagerCreator : AlbumManagerCreatorBase<FolderAlbumCreatorConfiguration>
     {
-        public FolderAlbumCreator(FolderAlbumCreatorConfiguration configuration) : base(configuration) { }
+        public FolderAlbumManagerCreator(FolderAlbumCreatorConfiguration configuration) : base(configuration) { }
 
 
         public override List<AlbumItem> GetItems()

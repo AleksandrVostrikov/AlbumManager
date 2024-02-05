@@ -1,6 +1,6 @@
 ﻿namespace AlbumsManager.Base
 {
-    public interface ICreator
+    public interface IAlbumManagerCreator
     {
         IEnumerable<AlbumItem> GetItems();
     }

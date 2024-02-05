@@ -6,10 +6,10 @@ namespace AlbumsManager
     {
         IAlbumManagerEditorBuilder AddEditor<TCreatorConfiguration>(Action<TCreatorConfiguration> configuration);
     }
-    internal class AlbumManagerMetadataBuilder : IAlbumManagerMetadataBuilder
+    internal sealed class AlbumManagerMetadataBuilder : IAlbumManagerMetadataBuilder
     {
-        private readonly ICreator _creator;
-        public AlbumManagerMetadataBuilder(ICreator creator) => _creator = creator;
+        private readonly IAlbumManagerCreator _creator;
+        public AlbumManagerMetadataBuilder(IAlbumManagerCreator creator) => _creator = creator;
        
         public IAlbumManagerEditorBuilder AddEditor<TCreatorConfiguration>(Action<TCreatorConfiguration> configuration)
         {

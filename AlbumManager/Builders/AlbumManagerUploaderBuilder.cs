@@ -7,11 +7,11 @@ namespace AlbumsManager
         public AlbumManager Build();
     }
 
-    internal class AlbumManagerUploaderBuilder : IAlbumManagerUploaderBuilder
+    internal sealed class AlbumManagerUploaderBuilder : IAlbumManagerUploaderBuilder
     {
-        private readonly ICreator _creator;
+        private readonly IAlbumManagerCreator _creator;
 
-        public AlbumManagerUploaderBuilder(ICreator creator) => _creator = creator;
+        public AlbumManagerUploaderBuilder(IAlbumManagerCreator creator) => _creator = creator;
        
         public AlbumManager Build()
         {

@@ -7,10 +7,10 @@ namespace AlbumsManager.Builders
         IAlbumManagerVieverBuilder AddViewer<TCreatorConfiguration>(Action<TCreatorConfiguration> configuration);
     }
 
-    internal class AlbumManagerCreatorBuilder : IAlbumManagerCreatorBuilder
+    internal sealed class AlbumManagerCreatorBuilder : IAlbumManagerCreatorBuilder
     {
-        private readonly ICreator _creator;
-        public AlbumManagerCreatorBuilder(ICreator creator) => _creator = creator;
+        private readonly IAlbumManagerCreator _creator;
+        public AlbumManagerCreatorBuilder(IAlbumManagerCreator creator) => _creator = creator;
 
         public IAlbumManagerVieverBuilder AddViewer<TCreatorConfiguration>(Action<TCreatorConfiguration> configuration)
         {
