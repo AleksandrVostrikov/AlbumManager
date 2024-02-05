@@ -2,7 +2,7 @@
 
 namespace AlbumsManager.Viewers
 {
-    public class AlbumFolderViewer : AlbumViewerBase
+    public class FolderAlbumViewer : AlbumViewerBase
     {
 
     }
