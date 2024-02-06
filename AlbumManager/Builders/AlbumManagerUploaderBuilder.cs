@@ -1,22 +1,29 @@
 ﻿using AlbumsManager.Base;
+using AlbumsManager.Configurations.Interfaces;
 
 namespace AlbumsManager
 {
-    public interface IAlbumManagerUploaderBuilder
+    public interface IAlbumManagerUploaderBuilder<TItem>
     {
-        public AlbumManager Build();
+        public AlbumManager<TItem> Build();
     }
 
-    internal sealed class AlbumManagerUploaderBuilder : IAlbumManagerUploaderBuilder
+    internal sealed class AlbumManagerUploaderBuilder<TItem> : IAlbumManagerUploaderBuilder<TItem>
+        where TItem : class
     {
-        private readonly IAlbumManagerCreator _creator;
+        private readonly IConfiguration _configuration;
+        private readonly IAlbumManagerCreator<TItem> _creator;
 
-        public AlbumManagerUploaderBuilder(IAlbumManagerCreator creator) => _creator = creator;
-       
-        public AlbumManager Build()
+        public AlbumManagerUploaderBuilder(IConfiguration configuration, IAlbumManagerCreator<TItem> creator)
+        {
+            _configuration = configuration;
+            _creator = creator;
+        }
+
+        public AlbumManager<TItem> Build()
         {
             var items = _creator.GetItems();
-            var manager = new AlbumManager(items);
+            var manager = new AlbumManager<TItem>(items);
             return manager;
         }
     }

@@ -1,20 +1,28 @@
 ﻿using AlbumsManager.Base;
+using AlbumsManager.Configurations.Interfaces;
 
 namespace AlbumsManager
 {
-    public interface IAlbumManagerEditorBuilder
+    public interface IAlbumManagerEditorBuilder<TItem>
     {
-        IAlbumManagerUploaderBuilder AddUploader<TCreatorConfiguration>(Action<TCreatorConfiguration> configuration);
+        IAlbumManagerUploaderBuilder<TItem> AddUploader(Action<IUploaderConfiguration> configuration);
     }
-    internal sealed class AlbumManagerEditorBuilder : IAlbumManagerEditorBuilder
+    internal sealed class AlbumManagerEditorBuilder<TItem> : IAlbumManagerEditorBuilder<TItem>
+        where TItem : class
     {
-        private readonly IAlbumManagerCreator _creator;
+        private readonly IConfiguration _configuration;
+        private readonly IAlbumManagerCreator<TItem> _creator;
 
-        public AlbumManagerEditorBuilder(IAlbumManagerCreator creator) => _creator = creator;
-       
-        public IAlbumManagerUploaderBuilder AddUploader<TCreatorConfiguration>(Action<TCreatorConfiguration> configuration)
+        public AlbumManagerEditorBuilder(IConfiguration configuration, IAlbumManagerCreator<TItem> creator)
         {
-            return new AlbumManagerUploaderBuilder(_creator);
+            _configuration = configuration;
+            _creator = creator;
+        }
+
+        public IAlbumManagerUploaderBuilder<TItem> AddUploader(Action<IUploaderConfiguration> configuration)
+        {
+            configuration(_configuration.UploaderConfiguration);
+            return new AlbumManagerUploaderBuilder<TItem>(_configuration, _creator);
         }
     }
 }

@@ -1,12 +1,8 @@
-﻿namespace AlbumsManager
+﻿namespace AlbumsManager.Models
 {
-    public class AlbumItem
+    public class AlbumDirectory
     {
-        public string FileName { get; set; } = null!;
-
         public string? Description { get; set; }
-
-        public long FileSize { get; set; }
 
         public string? DirectotyName { get; set; }
 

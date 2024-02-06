@@ -1,21 +1,23 @@
 ﻿using AlbumsManager.Base;
+using AlbumsManager.Configurations.FolderAlbum;
+using AlbumsManager.Models;
 
 namespace AlbumsManager.Creators.FolderTreeAlbum
 {
-    public sealed class FolderTreeAlbumManagerCreator : AlbumManagerCreatorBase<FolderTreeAlbumCreatorConfiguration>
+    public sealed class FolderTreeAlbumManagerCreator : AlbumManagerCreatorBase<CreatorConfiguration, AlbumDirectory>
     {
-        public FolderTreeAlbumManagerCreator(FolderTreeAlbumCreatorConfiguration configuration) : base(configuration) { }
+        public FolderTreeAlbumManagerCreator(CreatorConfiguration configuration) : base(configuration) { }
 
-        public override List<AlbumItem> GetItems()
+        public override List<AlbumDirectory> GetItems()
         {
-            var result = new List<AlbumItem>();
+            var result = new List<AlbumDirectory>();
 
-            if (!Path.Exists(Config.SourceRootPath))
+            if (!Path.Exists(Config.SourcePath))
             {
-                return new List<AlbumItem>();
+                return new List<AlbumDirectory>();
             }
 
-            var directoryInfo = new DirectoryInfo(Config.SourceRootPath);
+            var directoryInfo = new DirectoryInfo(Config.SourcePath);
 
             var directories = directoryInfo.GetDirectories();
 
@@ -29,7 +31,7 @@ namespace AlbumsManager.Creators.FolderTreeAlbum
                 var fileInfos = directory.GetFiles();
                 if (!fileInfos.Any())
                 {
-                    result.Add(new AlbumItem()
+                    result.Add(new AlbumDirectory()
                     {
                         Description = $"Files not found in directory.",
                         DirectotyName = directory.Name
@@ -44,7 +46,7 @@ namespace AlbumsManager.Creators.FolderTreeAlbum
                     FileSize = f.Length,
                 }).ToList();
 
-                result.Add(new AlbumItem()
+                result.Add(new AlbumDirectory()
                 {
                     Items = files,
                     Description = $"Total files in directory: {files.Count}",

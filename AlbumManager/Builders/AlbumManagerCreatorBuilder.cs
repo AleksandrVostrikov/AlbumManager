@@ -1,20 +1,28 @@
 ﻿using AlbumsManager.Base;
+using AlbumsManager.Configurations.Interfaces;
 
 namespace AlbumsManager.Builders
 {
-    public interface IAlbumManagerCreatorBuilder
+    public interface IAlbumManagerCreatorBuilder<TItem>
     {
-        IAlbumManagerVieverBuilder AddViewer<TCreatorConfiguration>(Action<TCreatorConfiguration> configuration);
+        IAlbumManagerVieverBuilder<TItem> AddViewer(Action<IViewerConfiguration> configuration);
     }
 
-    internal sealed class AlbumManagerCreatorBuilder : IAlbumManagerCreatorBuilder
+    internal sealed class AlbumManagerCreatorBuilder<TItem> : IAlbumManagerCreatorBuilder<TItem>
+        where TItem : class
     {
-        private readonly IAlbumManagerCreator _creator;
-        public AlbumManagerCreatorBuilder(IAlbumManagerCreator creator) => _creator = creator;
-
-        public IAlbumManagerVieverBuilder AddViewer<TCreatorConfiguration>(Action<TCreatorConfiguration> configuration)
+        private readonly IConfiguration _congiguration;
+        private readonly IAlbumManagerCreator<TItem> _creator;
+        public AlbumManagerCreatorBuilder(IConfiguration congiguration,IAlbumManagerCreator<TItem> creator)
         {
-            return new AlbumManagerVieverBuilder(_creator);
+            _congiguration = congiguration;
+            _creator = creator;
+        }
+
+        public IAlbumManagerVieverBuilder<TItem> AddViewer(Action<IViewerConfiguration> configuration)
+        {
+            configuration(_congiguration.ViewerConfiguration);
+            return new AlbumManagerVieverBuilder<TItem>(_congiguration, _creator);
         }
     }
 }

@@ -1,19 +1,23 @@
 ﻿using AlbumsManager.Base;
 using AlbumsManager.Builders;
+using AlbumsManager.Configurations.Interfaces;
+using AlbumsManager.Creators;
 
 namespace AlbumsManager
 {
-    public class AlbumManagerBuilder<TCreator>
-        where TCreator : IAlbumManagerCreator
+    public sealed class AlbumManagerBuilder<TCreator, TConfiguration, TItem>
+        where TCreator : IAlbumManagerCreator<TItem>
+        where TConfiguration: IConfiguration, new()
+        where TItem : class
     {
-        private IAlbumManagerCreator _creator = null!;
-        public IAlbumManagerCreatorBuilder AddCreator<TCreatorConfiguration>(Action<TCreatorConfiguration> configuration)
-            where TCreatorConfiguration : class, new()
+        private IAlbumManagerCreator<TItem> _creator = null!;
+
+        public IAlbumManagerCreatorBuilder<TItem> AddCreator(Action<ICreatorConfiguration> configuration)
         {
-            var config = new TCreatorConfiguration();
-            configuration(config);
-            _creator = (AlbumManagerCreatorBase<TCreatorConfiguration>)Activator.CreateInstance(typeof(TCreator), config)!;
-            return new AlbumManagerCreatorBuilder(_creator);
+            var config = new TConfiguration();
+            configuration(config.CreatorConfiguration);
+            _creator = (TCreator)Activator.CreateInstance(typeof(TCreator), config.CreatorConfiguration)!;
+            return new AlbumManagerCreatorBuilder<TItem>(config, _creator);
         }
     }
 }

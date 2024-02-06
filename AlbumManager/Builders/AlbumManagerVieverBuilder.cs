@@ -1,20 +1,28 @@
 ﻿using AlbumsManager.Base;
+using AlbumsManager.Configurations.Interfaces;
 
 namespace AlbumsManager.Builders
 {
-    public interface IAlbumManagerVieverBuilder
+    public interface IAlbumManagerVieverBuilder<TItem>
     {
-        IAlbumManagerMetadataBuilder AddMetadataReader<TCreatorConfiguration>(Action<TCreatorConfiguration> configuration);
+        IAlbumManagerMetadataBuilder<TItem> AddMetadataReader(Action<IMetadataReaderConfiguration> configuration);
     }
 
-    internal sealed class AlbumManagerVieverBuilder : IAlbumManagerVieverBuilder
+    internal sealed class AlbumManagerVieverBuilder<TItem> : IAlbumManagerVieverBuilder<TItem>
+        where TItem : class
     {
-        private readonly IAlbumManagerCreator _creator;
-        public AlbumManagerVieverBuilder(IAlbumManagerCreator creator) => _creator = creator;
-
-        public IAlbumManagerMetadataBuilder AddMetadataReader<TCreatorConfiguration>(Action<TCreatorConfiguration> configuration)
+        private readonly IConfiguration _configuration;
+        private readonly IAlbumManagerCreator<TItem> _creator;
+        public AlbumManagerVieverBuilder(IConfiguration configuration,IAlbumManagerCreator<TItem> creator)
         {
-            return new AlbumManagerMetadataBuilder(_creator);
+            _configuration = configuration;
+            _creator = creator;
+        }
+
+        public IAlbumManagerMetadataBuilder<TItem> AddMetadataReader(Action<IMetadataReaderConfiguration> configuration)
+        {
+            configuration(_configuration.MetadataReaderConfiguration);
+            return new AlbumManagerMetadataBuilder<TItem>(_configuration, _creator);
         }
     }
 }

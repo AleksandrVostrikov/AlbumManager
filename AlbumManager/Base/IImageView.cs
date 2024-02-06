@@ -1,7 +1,9 @@
-﻿namespace AlbumsManager
+﻿using AlbumsManager.Models;
+
+namespace AlbumsManager
 {
-    public interface IImageView
+    public interface IImageView<TItem>
     {
-        public IEnumerable<AlbumItem> Items { get; }
+        public IEnumerable<TItem> Items { get; }
     }
 }

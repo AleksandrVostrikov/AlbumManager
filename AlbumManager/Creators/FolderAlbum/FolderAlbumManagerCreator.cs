@@ -1,10 +1,12 @@
 ﻿using AlbumsManager.Base;
+using AlbumsManager.Configurations.FolderAlbum;
+using AlbumsManager.Models;
 
 namespace AlbumsManager.Creators.FolderAlbum
 {
-    public sealed class FolderAlbumManagerCreator : AlbumManagerCreatorBase<FolderAlbumCreatorConfiguration>
+    public sealed class FolderAlbumManagerCreator : AlbumManagerCreatorBase<CreatorConfiguration, AlbumItem>
     {
-        public FolderAlbumManagerCreator(FolderAlbumCreatorConfiguration configuration) : base(configuration) { }
+        public FolderAlbumManagerCreator(CreatorConfiguration configuration) : base(configuration) { }
 
 
         public override List<AlbumItem> GetItems()

@@ -1,11 +1,13 @@
-﻿namespace AlbumsManager.Viewers
+﻿using AlbumsManager.Models;
+
+namespace AlbumsManager.Viewers
 {
-    public class DefaultImageView : IImageView
+    public class DefaultImageView<TItem> : IImageView<TItem>
     {
-        public DefaultImageView(IEnumerable<AlbumItem> items)
+        public DefaultImageView(IEnumerable<TItem> items)
         {
             Items = items;
         }
-        public IEnumerable<AlbumItem> Items { get; }
+        public IEnumerable<TItem> Items { get; }
     }
 }

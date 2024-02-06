@@ -1,14 +1,15 @@
 ﻿using AlbumsManager.Base;
+using AlbumsManager.Models;
 using AlbumsManager.Viewers;
 using System.Text;
 
 namespace AlbumsManager
 {
-    public sealed class AlbumManager
+    public sealed class AlbumManager<TItem>
     {
-        public List<AlbumItem> Items { get; }
+        public List<TItem> Items { get; }
 
-        protected internal AlbumManager(IEnumerable<AlbumItem> items) => Items = items.ToList();
+        protected internal AlbumManager(IEnumerable<TItem> items) => Items = items.ToList();
          
         public override string ToString()
         {
@@ -19,6 +20,6 @@ namespace AlbumsManager
             return stringBuilder.ToString();
         }
 
-        public IImageView GetView() => new DefaultImageView(Items);
+        public IImageView<TItem> GetView() => new DefaultImageView<TItem>(Items);
     }
 }
