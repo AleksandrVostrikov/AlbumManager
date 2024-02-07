@@ -1,8 +1,10 @@
-﻿using AlbumsManager.Models;
+﻿using AlbumsManager.Configurations.Interfaces;
+using AlbumsManager.Models;
 
 namespace AlbumsManager.Base
 {
     public abstract class AlbumManagerCreatorBase<TConfiguration, TItem> : IAlbumManagerCreator<TItem>
+        where TConfiguration : class, IConfiguration
         where TItem : class
     {
         public TConfiguration Config { get; }

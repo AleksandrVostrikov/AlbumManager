@@ -1,4 +1,5 @@
 ﻿using AlbumsManager;
+using AlbumsManager.Configurations.FolderAlbum;
 using AlbumsManager.Creators.FolderAlbum;
 using AlbumsManager.Creators.FolderTreeAlbum;
 using AlbumsManager.Models;
@@ -6,7 +7,7 @@ using AlbumsManager.Models;
 //builder.AddCreator<FolderTreeAlbumCreator, FolderTreeAlbumCreatorConfiguration>(x => x.SourceRootPath = "G:\\CommonFolder");
 
 var manager = new AlbumManagerBuilder<FolderAlbumManagerCreator, DefaultConfiguration, AlbumItem>()
-    .AddCreator(x => x.SourcePath = "G:\\CommonFolder")
+    .AddCreator<CreatorConfiguration>(x => x.SourcePath = "G:\\CommonFolder")
     .AddViewer(x => x.TakeTop = 10)
     .AddMetadataReader(x => x.Enabled = false)
     .AddEditor(x => x.Enabled = false)

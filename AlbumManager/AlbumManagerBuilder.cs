@@ -12,11 +12,12 @@ namespace AlbumsManager
     {
         private IAlbumManagerCreator<TItem> _creator = null!;
 
-        public IAlbumManagerCreatorBuilder<TItem> AddCreator(Action<ICreatorConfiguration> configuration)
+        public IAlbumManagerCreatorBuilder<TItem> AddCreator<TCreatorConfiguration>(Action<TCreatorConfiguration> configuration)
+        where TCreatorConfiguration : ICreatorConfiguration
         {
             var config = new TConfiguration();
-            configuration(config.CreatorConfiguration);
-            _creator = (TCreator)Activator.CreateInstance(typeof(TCreator), config.CreatorConfiguration)!;
+            configuration((TCreatorConfiguration)config.CreatorConfiguration);
+            _creator = (TCreator)Activator.CreateInstance(typeof(TCreator), config)!;
             return new AlbumManagerCreatorBuilder<TItem>(config, _creator);
         }
     }

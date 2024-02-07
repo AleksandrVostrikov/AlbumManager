@@ -1,0 +1,16 @@
+﻿@page "/details/{FolderName}"
+@model AlbumsManager.Web.Pages.DetailsModel
+@{
+    ViewData["Title"] = "Images from folder";
+}
+
+<h1>@ViewData["Title"] @Model.FolderName</h1>
+@if (Model.Images is not null && Model.Images.Any())
+{
+    foreach (var item in Model.Images)
+    {
+        <p>
+            <img src="~/Images/@Model.FolderName/@item.FileName" width="400px"/>
+        </p>
+    }
+}

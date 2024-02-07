@@ -1,23 +1,24 @@
 ﻿using AlbumsManager.Base;
 using AlbumsManager.Configurations.FolderAlbum;
+using AlbumsManager.Configurations.Interfaces;
 using AlbumsManager.Models;
 
 namespace AlbumsManager.Creators.FolderTreeAlbum
 {
-    public sealed class FolderTreeAlbumManagerCreator : AlbumManagerCreatorBase<CreatorConfiguration, AlbumDirectory>
+    public sealed class FolderTreeAlbumManagerCreator : AlbumManagerCreatorBase<DefaultConfiguration, AlbumDirectory>
     {
-        public FolderTreeAlbumManagerCreator(CreatorConfiguration configuration) : base(configuration) { }
+        public FolderTreeAlbumManagerCreator(DefaultConfiguration configuration) : base(configuration) { }
 
         public override List<AlbumDirectory> GetItems()
         {
             var result = new List<AlbumDirectory>();
 
-            if (!Path.Exists(Config.SourcePath))
+            if (!Path.Exists(Config.CreatorConfiguration.SourcePath))
             {
                 return new List<AlbumDirectory>();
             }
 
-            var directoryInfo = new DirectoryInfo(Config.SourcePath);
+            var directoryInfo = new DirectoryInfo(Config.CreatorConfiguration.SourcePath);
 
             var directories = directoryInfo.GetDirectories();
 

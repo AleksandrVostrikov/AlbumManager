@@ -4,27 +4,25 @@ using AlbumsManager.Models;
 
 namespace AlbumsManager.Creators.FolderAlbum
 {
-    public sealed class FolderAlbumManagerCreator : AlbumManagerCreatorBase<CreatorConfiguration, AlbumItem>
+    public sealed class FolderAlbumManagerCreator : AlbumManagerCreatorBase<DefaultConfiguration, AlbumItem>
     {
-        public FolderAlbumManagerCreator(CreatorConfiguration configuration) : base(configuration) { }
+        public FolderAlbumManagerCreator(DefaultConfiguration configuration) : base(configuration) { }
 
 
         public override List<AlbumItem> GetItems()
         {
-            if (!Path.Exists(Config.SourcePath))
+            if (!Path.Exists(Config.CreatorConfiguration.SourcePath))
             {
                 return new List<AlbumItem>();
             }
 
-            var directory = new DirectoryInfo(Config.SourcePath);
+            var directory = new DirectoryInfo(Config.CreatorConfiguration.SourcePath);
             var files = directory.GetFiles();
 
             if (!files.Any())
             {
                 return new List<AlbumItem>();
             }
-
-            // TODO: Description 
 
             return files.Select(f => new AlbumItem
             {
