@@ -1,4 +1,5 @@
 ﻿public interface IViewerConfiguration
 {
-    int TakeTop { get; set; }
+    IEnumerable<IImageProcessor> ImageProcessors { get; }
+    void AddImageProcessor(IImageProcessor imageProcessor);
 }

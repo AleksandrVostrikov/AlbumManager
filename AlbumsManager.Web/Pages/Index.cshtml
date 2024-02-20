@@ -1,7 +1,9 @@
 ﻿@page
+@using AlbumsManager.Configurations.FolderAlbum
 @model IndexModel
 @{
     ViewData["Title"] = "Directories with images";
+    var isSkipped = Model.Manager.Configuration.CreatorConfiguration.SkipLoadingImages;
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -10,9 +12,13 @@
     foreach (var item in Model.Directories)
     {
         <p>
-            <a href="~/Details/@item.DirectotyName" class="text-decoration-none">
-                <span class="display-4">@item.DirectotyName</span> 
-                <span class="badge bg-black">@(item.Items?.Count() ?? 0) </span>
+            <a href="~/Details/@item.Name" class="text-decoration-none">
+                <span class="display-4">@item.Name</span> 
+                @if (!isSkipped)
+                {
+                    <span class="badge bg-black">@(item.Items?.Count() ?? 0) </span>
+                }
+
             </a>
         </p>
     }

@@ -9,7 +9,7 @@ namespace AlbumsManager.Creators.FolderAlbum
         public FolderAlbumManagerCreator(DefaultConfiguration configuration) : base(configuration) { }
 
 
-        public override List<AlbumItem> GetItems()
+        public override async Task<IEnumerable<AlbumItem>> GetItemsAsync()
         {
             if (!Path.Exists(Config.CreatorConfiguration.SourcePath))
             {
@@ -26,9 +26,10 @@ namespace AlbumsManager.Creators.FolderAlbum
 
             return files.Select(f => new AlbumItem
             {
-                FileName = f.Name,
+                Name = f.Name,
                 Description = f.DirectoryName,
-                FileSize = f.Length
+                FileSize = f.Length,
+                OriginalBytes = File.ReadAllBytes(Path.Combine(Config.CreatorConfiguration.SourcePath, f.Name))
             }).ToList();
         }
     }

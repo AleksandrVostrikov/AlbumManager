@@ -1,3 +1,5 @@
+using AlbumsManager.Configurations.FolderAlbum;
+using AlbumsManager.Creators.FolderTreeAlbum;
 using AlbumsManager.Extensions;
 using AlbumsManager.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,6 +12,8 @@ namespace AlbumsManager.Web.Pages
 
         private readonly ILogger<IndexModel> _logger;
         private readonly IWebHostEnvironment _environment;
+        
+        public AlbumManager<AlbumDirectory> Manager { get; protected set; }
 
         public IndexModel(ILogger<IndexModel> logger, IWebHostEnvironment environment)
         {
@@ -18,13 +22,12 @@ namespace AlbumsManager.Web.Pages
         }
 
 
-        public void OnGet()
+        public async Task OnGet()
         {
             var folder = Path.Combine(_environment.WebRootPath, "Images");
             _logger.LogInformation(folder);
-            var manager = AlbumManagerBuilderExtensions.GetImagesFromFolderTree(folder);
-            var viewer = manager.GetView();
-            Directories = viewer.Items;
+            Manager = await AlbumManagerBuilderExtensions.GetImagesFromFolderTreesAsync(folder, false);
+            Directories = await Manager.GetViewAsync(); 
         }
     }
 }

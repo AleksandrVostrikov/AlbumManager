@@ -1,4 +1,16 @@
 ﻿public interface IMetadataReaderConfiguration
 {
-    bool Enabled { get; set; }
+    IMetaDataReaderProcessor? MetaDataProcessor { get; }
+    public void AddMetaDataReaderProcessor(TextMetadataProcessor textMetaDataReaderProcessor);
+
+}
+
+public class TextMetadataProcessor
+{
+
+}
+
+public interface IMetaDataReaderProcessor
+{
+
 }

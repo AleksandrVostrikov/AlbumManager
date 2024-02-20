@@ -1,11 +1,9 @@
 ﻿namespace AlbumsManager.Models
 {
-    public class AlbumDirectory
+    public class AlbumDirectory : ItemBase
     {
-        public string? Description { get; set; }
-
-        public string? DirectotyName { get; set; }
-
         public IEnumerable<AlbumItem>? Items { get; set; }
+        public override bool CanBeWatermark => false;
+        public override bool HasItems => true;
     }
 }

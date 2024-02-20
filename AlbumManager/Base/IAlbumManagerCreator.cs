@@ -4,8 +4,8 @@ using System.Runtime.CompilerServices;
 namespace AlbumsManager.Base
 {
     public interface IAlbumManagerCreator<TItem>
-        where TItem : class
+        where TItem : ItemBase
     {
-        IEnumerable<TItem> GetItems();
+        Task<IEnumerable<TItem>> GetItemsAsync();
     }
 }

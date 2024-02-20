@@ -1,15 +1,13 @@
 ﻿using AlbumsManager.Base;
+using AlbumsManager.Base.Builders;
 using AlbumsManager.Configurations.Interfaces;
+using AlbumsManager.Models;
 
 namespace AlbumsManager
 {
-    public interface IAlbumManagerUploaderBuilder<TItem>
-    {
-        public AlbumManager<TItem> Build();
-    }
 
     internal sealed class AlbumManagerUploaderBuilder<TItem> : IAlbumManagerUploaderBuilder<TItem>
-        where TItem : class
+        where TItem : ItemBase
     {
         private readonly IConfiguration _configuration;
         private readonly IAlbumManagerCreator<TItem> _creator;
@@ -20,10 +18,10 @@ namespace AlbumsManager
             _creator = creator;
         }
 
-        public AlbumManager<TItem> Build()
+        public async Task<AlbumManager<TItem>> BuildAsync()
         {
-            var items = _creator.GetItems();
-            var manager = new AlbumManager<TItem>(items);
+            var items = await _creator.GetItemsAsync();
+            var manager = new AlbumManager<TItem>(items, _configuration);
             return manager;
         }
     }

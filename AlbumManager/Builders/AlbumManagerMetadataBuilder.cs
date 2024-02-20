@@ -1,14 +1,12 @@
 ﻿using AlbumsManager.Base;
+using AlbumsManager.Base.Builders;
 using AlbumsManager.Configurations.Interfaces;
+using AlbumsManager.Models;
 
 namespace AlbumsManager
 {
-    public interface IAlbumManagerMetadataBuilder<TItem>
-    {
-        IAlbumManagerEditorBuilder<TItem> AddEditor(Action<IEditorConfiguration> configuration);
-    }
     internal sealed class AlbumManagerMetadataBuilder<TItem> : IAlbumManagerMetadataBuilder<TItem>
-        where TItem : class
+        where TItem : ItemBase
     {
         private readonly IConfiguration _configuration;
         private readonly IAlbumManagerCreator<TItem> _creator;
@@ -18,9 +16,9 @@ namespace AlbumsManager
             _creator = creator;
         }
 
-        public IAlbumManagerEditorBuilder<TItem> AddEditor(Action<IEditorConfiguration> configuration)
+        public IAlbumManagerEditorBuilder<TItem> AddEditor<TEditorConfiguration>(Action<TEditorConfiguration> configuration)
         {
-            configuration(_configuration.EditorConfiguration);
+            configuration((TEditorConfiguration)_configuration.EditorConfiguration);
             return new AlbumManagerEditorBuilder<TItem>(_configuration, _creator);
         }
     }

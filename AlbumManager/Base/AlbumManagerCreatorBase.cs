@@ -5,12 +5,12 @@ namespace AlbumsManager.Base
 {
     public abstract class AlbumManagerCreatorBase<TConfiguration, TItem> : IAlbumManagerCreator<TItem>
         where TConfiguration : class, IConfiguration
-        where TItem : class
+        where TItem : ItemBase
     {
         public TConfiguration Config { get; }
 
         public AlbumManagerCreatorBase(TConfiguration config) => Config = config;
 
-        public abstract IEnumerable<TItem> GetItems();
+        public abstract Task<IEnumerable<TItem>> GetItemsAsync();
     }
 }

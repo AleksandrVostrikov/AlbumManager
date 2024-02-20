@@ -9,7 +9,7 @@ namespace AlbumsManager.Creators.FolderTreeAlbum
     {
         public FolderTreeAlbumManagerCreator(DefaultConfiguration configuration) : base(configuration) { }
 
-        public override List<AlbumDirectory> GetItems()
+        public override async Task<IEnumerable<AlbumDirectory>> GetItemsAsync()
         {
             var result = new List<AlbumDirectory>();
 
@@ -35,23 +35,24 @@ namespace AlbumsManager.Creators.FolderTreeAlbum
                     result.Add(new AlbumDirectory()
                     {
                         Description = $"Files not found in directory.",
-                        DirectotyName = directory.Name
+                        Name = directory.Name
                     });
                     continue;
                 }
 
                 var files = fileInfos.Select(f => new AlbumItem
                 {
-                    FileName = f.Name,
+                    Name = f.Name,
                     Description = f.CreationTime.ToString(),
                     FileSize = f.Length,
+                    OriginalBytes = File.ReadAllBytes(Path.Combine(Config.CreatorConfiguration.SourcePath, f.Name))
                 }).ToList();
 
                 result.Add(new AlbumDirectory()
                 {
                     Items = files,
                     Description = $"Total files in directory: {files.Count}",
-                    DirectotyName = directory.Name
+                    Name = directory.Name
                 });
             }
 

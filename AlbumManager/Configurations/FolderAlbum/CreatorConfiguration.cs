@@ -6,5 +6,7 @@ namespace AlbumsManager.Configurations.FolderAlbum
     {
         public string SourcePath { get; set; } = null!;
 
+        public bool SkipLoadingImages { get; set; }
+
     }
 }

@@ -1,14 +1,16 @@
 ﻿using AlbumsManager.Base;
+using AlbumsManager.Base.Builders;
 using AlbumsManager.Builders;
 using AlbumsManager.Configurations.Interfaces;
 using AlbumsManager.Creators;
+using AlbumsManager.Models;
 
 namespace AlbumsManager
 {
     public sealed class AlbumManagerBuilder<TCreator, TConfiguration, TItem>
         where TCreator : IAlbumManagerCreator<TItem>
         where TConfiguration: IConfiguration, new()
-        where TItem : class
+        where TItem : ItemBase
     {
         private IAlbumManagerCreator<TItem> _creator = null!;
 

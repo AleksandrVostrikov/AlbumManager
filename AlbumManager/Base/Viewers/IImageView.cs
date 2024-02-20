@@ -1,8 +1,8 @@
 ﻿using AlbumsManager.Models;
 
-namespace AlbumsManager
+namespace AlbumsManager.Base.Viewers
 {
-    public interface IImageView<TItem>
+    public interface IImageView<out TItem>
     {
         public IEnumerable<TItem> Items { get; }
     }

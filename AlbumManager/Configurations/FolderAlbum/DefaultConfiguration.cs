@@ -1,7 +1,7 @@
-﻿using AlbumsManager.Configurations.FolderAlbum;
-using AlbumsManager.Configurations.Interfaces;
+﻿using AlbumsManager.Base;
+using AlbumsManager.Configurations.FolderAlbum;
 
-public class DefaultConfiguration : Configuration
+public class DefaultConfiguration : ConfigurationBase
 {
     
 }

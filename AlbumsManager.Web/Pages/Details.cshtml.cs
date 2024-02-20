@@ -17,16 +17,15 @@ namespace AlbumsManager.Web.Pages
         {
             _environment = environment;
         }
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
             if (String.IsNullOrEmpty(FolderName))
             {
                 return RedirectToPage("Error");
             }
             var folder = Path.Combine(_environment.WebRootPath, "Images", FolderName);
-            var manager = AlbumManagerBuilderExtensions.GetImagesFromFolder(folder);
-            var viewer = manager.GetView();
-            Images = viewer.Items;
+            var manager = await AlbumManagerBuilderExtensions.GetImagesFromFolderAsync(folder);
+            Images = await manager.GetViewAsync();
             return Page();
         }
     }

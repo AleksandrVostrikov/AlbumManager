@@ -1,12 +1,12 @@
 ﻿namespace AlbumsManager.Models
 {
 
-    public class AlbumItem
+    public class AlbumItem : ItemBase
     {
-        public string FileName { get; set; } = null!;
-
-        public string? Description { get; set; }
-
         public long FileSize { get; set; }
+
+        public byte[] OriginalBytes { get; set; } = null!;
+
+        public byte[]? ProcessedBytes { get; set; }
     }
 }

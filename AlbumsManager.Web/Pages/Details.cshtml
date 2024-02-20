@@ -9,8 +9,15 @@
 {
     foreach (var item in Model.Images)
     {
+        @* <p>
+            <img src="~/Images/@Model.FolderName/@item.Name" width="400px"/>
+        </p> *@
         <p>
-            <img src="~/Images/@Model.FolderName/@item.FileName" width="400px"/>
+            <img src="data:image/jpeg;base64, @Convert.ToBase64String(item.OriginalBytes)" width="300px"/>
+            @if (item.ProcessedBytes is not null)
+            {
+                <img src="data:image/jpeg;base64, @Convert.ToBase64String(item.ProcessedBytes)" width="300px"/>
+            }
         </p>
     }
 }

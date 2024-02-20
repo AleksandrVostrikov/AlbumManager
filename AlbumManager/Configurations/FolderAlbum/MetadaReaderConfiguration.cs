@@ -1,4 +1,9 @@
 ﻿public class MetadaReaderConfiguration : IMetadataReaderConfiguration
 {
-    public bool Enabled { get; set; }
+    public IMetaDataReaderProcessor? MetaDataProcessor => throw new NotImplementedException();
+
+    public void AddMetaDataReaderProcessor(TextMetadataProcessor textMetaDataReaderProcessor)
+    {
+        
+    }
 }

@@ -1,15 +1,12 @@
 ﻿using AlbumsManager.Base;
+using AlbumsManager.Base.Builders;
 using AlbumsManager.Configurations.Interfaces;
+using AlbumsManager.Models;
 
 namespace AlbumsManager.Builders
 {
-    public interface IAlbumManagerVieverBuilder<TItem>
-    {
-        IAlbumManagerMetadataBuilder<TItem> AddMetadataReader(Action<IMetadataReaderConfiguration> configuration);
-    }
-
     internal sealed class AlbumManagerVieverBuilder<TItem> : IAlbumManagerVieverBuilder<TItem>
-        where TItem : class
+        where TItem : ItemBase
     {
         private readonly IConfiguration _configuration;
         private readonly IAlbumManagerCreator<TItem> _creator;
@@ -19,9 +16,9 @@ namespace AlbumsManager.Builders
             _creator = creator;
         }
 
-        public IAlbumManagerMetadataBuilder<TItem> AddMetadataReader(Action<IMetadataReaderConfiguration> configuration)
+        public IAlbumManagerMetadataBuilder<TItem> AddMetadataReader<TMetadataReaderConfiguration>(Action<TMetadataReaderConfiguration> configuration)
         {
-            configuration(_configuration.MetadataReaderConfiguration);
+            configuration((TMetadataReaderConfiguration)_configuration.MetadataReaderConfiguration);
             return new AlbumManagerMetadataBuilder<TItem>(_configuration, _creator);
         }
     }
